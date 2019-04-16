@@ -1,0 +1,9 @@
+# folders
+/.vscode/ipch
+/lib
+/include
+/bin
+
+*.exe
+*.ipch
+*.txt
