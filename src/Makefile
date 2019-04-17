@@ -1,2 +1,2 @@
 schema: main.cpp interface.cpp
-	g++ main.cpp interface.cpp -o main.exe && ./main.exe
+	g++ main.cpp -g -Wall -Wextra -Wpedantic interface.cpp -o main.exe && ./main.exe

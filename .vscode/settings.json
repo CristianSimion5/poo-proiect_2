@@ -38,7 +38,8 @@
         "set": "cpp",
         "map": "cpp",
         "queue": "cpp",
-        "xhash": "cpp"
+        "xhash": "cpp",
+        "vector": "cpp"
     },
     "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe"
 }

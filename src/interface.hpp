@@ -12,7 +12,27 @@ public:
     T info;
     nod<T> *st, *dr, *pr;
 
-    nod(T data = T()): info(data) {st = NULL, dr = NULL, pr = NULL;};
+    nod(T data = T()): info(data), st(NULL), dr(NULL), pr(NULL) {};
+    void inordine(ostream& os) {
+        if (this == NULL)
+            return;
+        st -> inordine(os);
+        os << info << ' ';
+        dr -> inordine(os);
+    };
+    void copie_recursiv(nod<T>* copie) {
+        info = copie -> info;
+        if (copie -> st != NULL) {
+            st = new nod<T>;
+            st -> copie_recursiv(copie -> st);
+            st -> pr = this;
+        }
+        if (copie -> dr != NULL) {
+            dr = new nod<T>;
+            dr -> copie_recursiv(copie -> dr);
+            dr -> pr = this;
+        }
+    }
 };
 
 template <typename T>
@@ -25,79 +45,18 @@ public:
 
 template <typename T, typename Compare = greater<T>>
 class arbore {
-public:
+protected:
     int nr_noduri;
-
+public:
     arbore(): nr_noduri(0) {};
+    virtual ~arbore() {};
     virtual bool cautare(T data, Compare comp) = 0;
     virtual void inserare(T data, Compare comp) = 0;
-   // virtual void stergere(T data, Compare comp) = 0;
-    //virtual int inaltime() = 0;
+    virtual void stergere(T data, Compare comp) = 0;
+    virtual T get_rad() = 0;
+    virtual int inaltime() = 0;
+
+    int size() { return nr_noduri; };
+    bool empty() { if (nr_noduri > 0) return false; return true; };
 };
 
-template <typename T, typename Compare = greater<T>>
-class abc: public arbore<T, Compare> {
-private:
-    nod<T> *rad;
-
-public:
-    abc(): arbore<T, Compare>() { rad = NULL; };
-    bool cautare(T data, Compare comp = Compare());
-    void inserare(T data, Compare comp = Compare());
-
-    friend ostream& operator<<(ostream& os, abc<T, Compare> &arb) {
-        abc<T, Compare> sub;
-        sub.rad = arb.rad -> st;
-        if (sub.rad != NULL)
-            os << sub;
-        os << arb.rad -> info << ' ';
-        sub.rad = arb.rad -> dr;
-        if (sub.rad != NULL)
-            os << sub;
-        return os;
-    }
-};
-
-template <typename T, typename Compare>
-bool abc<T, Compare>::cautare(T data, Compare comp) {
-    nod<T>* p = rad;
-    while (p != NULL && p->info != data) {
-        if (comp(p -> info, data))
-            p = p -> st;
-        else
-            p = p -> dr;
-    }
-    if (p == NULL)
-        return false;
-    return true;
-}
-
-template <typename T, typename Compare>
-void abc<T, Compare>::inserare(T data, Compare comp) {
-    if (rad == NULL) {
-        rad = new nod<T>(data);
-        return;
-    }
-    if (cautare(data))
-        return;
-    nod<T>* p = rad, *q = new nod<T>(data);
-    this -> nr_noduri++;
-    while (p->info != data) {
-        if (comp(p -> info, data))
-            if (p -> st == NULL) {
-                p -> st = q;
-                q -> pr = p;
-                break;
-            }
-            else
-                p = p -> st;
-        else
-            if (p -> dr == NULL) {
-                p -> dr = q;
-                q -> pr = p;
-                break;
-            }
-            else
-             p = p -> dr;
-    }
-}

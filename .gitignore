@@ -3,6 +3,7 @@
 /lib
 /include
 /bin
+/src/Codeblocks
 
 *.exe
 *.ipch
