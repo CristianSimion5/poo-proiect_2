@@ -5,9 +5,6 @@
 #pragma once
 using namespace std;
 
-//template <typename T>
-//class nod;
-
 template <typename T, typename Compare = greater<T>>
 class abc: public arbore<T, Compare> {
 private:
@@ -25,11 +22,20 @@ public:
     void inserare(T data, Compare comp = Compare());
     void stergere(T data, Compare comp = Compare());
     T get_rad() { return rad -> info; };
-    
+    int inaltime() { if (rad == NULL) return 0; return rad -> height_max(); };
+    void afis_frunze(ostream& os) {
+        rad -> afis_recursiv(os);
+    }
+
     abc<T, Compare>& operator=(const abc<T, Compare>& arb);
     abc<T, Compare> operator+(abc<T, Compare> arbdel);
     abc<T, Compare> operator-(abc<T, Compare> arbdel);
     abc<T, Compare> operator*(abc<T, Compare> arbdel);
+
+    bool operator==(abc<T, Compare>& arb);
+    bool operator!=(abc<T, Compare>& arb);
+    bool operator<(abc<T, Compare>& arb);
+
 
     friend ostream& operator<<(ostream& os, abc<T, Compare>& arb) {
         arb.rad -> inordine(os);
@@ -107,6 +113,21 @@ abc<T, Compare> abc<T, Compare>::operator*(abc<T, Compare> arbdel) {
         de_sters.stergere(x);
     }
     return inters;
+}
+
+template <typename T, typename Compare>
+bool abc<T, Compare>::operator==(abc<T, Compare>& arb) {
+    return rad -> compara_recursiv(arb.rad);
+}
+
+template <typename T, typename Compare>
+bool abc<T, Compare>::operator!=(abc<T, Compare>& arb) {
+    return !(*this == arb);
+}
+
+template <typename T, typename Compare>
+bool abc<T, Compare>::operator<(abc<T, Compare>& arb) {
+    return this -> size() < arb.size();
 }
 
 template <typename T, typename Compare>
