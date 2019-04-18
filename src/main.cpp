@@ -11,7 +11,7 @@
 using namespace std;
 
 int main() {
-    /*abc<int> a;
+    abc<int> a;
     a.inserare(10);
     a.inserare(20);
     a.inserare(0);
@@ -39,7 +39,7 @@ int main() {
         cout << v[i].size() << '\n';
     }
     if (c == c)
-        cout << "ok";*/
+        cout << "ok" << '\n' << '\n';
     arn<int> A;
     A.inserare(10);
     A.inserare(5);
@@ -47,6 +47,17 @@ int main() {
     A.inserare(60);
     A.inserare(30);
     A.inserare(20);
-    cout << A;
+    A.inserare(100);
+    A.inserare(35);
+    A.inserare(27);
+    A.inserare(200);
+    A.inserare(300);
+    A.inserare(400);
+    cout << A.size() << '\n';
+    arn<int> B(A);
+    cin >> B;
+    cout << B << '\n';
+    B = A;
+    cout << B << '\n' << A.inaltime() << '\n';
     return 0;
 }

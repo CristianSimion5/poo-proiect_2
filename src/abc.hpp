@@ -41,13 +41,20 @@ public:
         arb.rad -> inordine(os);
         return os;
     }
-
     friend istream& operator>>(istream& is, abc<T, Compare>& arb) {
         T x;
         is >> x;
         arb.inserare(x);
         return is;
     }
+
+    /*class Iterator {
+        private:
+            nod<T> *curr;
+        public:
+            
+            T operator*() { return this -> T; };
+    };*/
 };
 
 template <typename T, typename Compare>
